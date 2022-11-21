@@ -1,0 +1,11 @@
+.error-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-svg {
+  height: 500px;
+  /* box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1); */
+}

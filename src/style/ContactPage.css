@@ -1,0 +1,62 @@
+.contact-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-section {
+  width: 400px;
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.contact-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.contact-label {
+  color: #6c009e;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.name-label {
+}
+
+.email-label {
+}
+
+.message-label {
+}
+
+.contact-input {
+  color: #6c009e;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  padding: 5px;
+}
+
+.text-area {
+}
+
+.btn-contact {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: #6c009e;
+}
+
+.btn-contact:hover {
+  color: #ffffff;
+  background-color: #430361;
+}
