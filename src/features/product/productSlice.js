@@ -1,91 +1,75 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
-const URL = "https://simple-e-comerce-default-rtdb.firebaseio.com/product.json";
-
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
-    const response = await axios.get(URL);
-    let ourdata = [];
-    for (let key in response.data) {
-      ourdata.push({
-        id: key,
-        image: response.data[key].image,
-        description: response.data[key].body,
-        price: response.data[key].price,
-        discountRate: response.data[key].discountRate,
-        title: response.data[key].title,
+export const fetchAllProducts = createAsyncThunk(
+  "products/fetchAllProducts",
+  async (args, thunkAPI) => {
+    try {
+      let products = [];
+      const docsSnap = await getDocs(collection(db, "products"));
+      docsSnap.forEach((doc) => {
+        const data = doc.data();
+        products.push({ id: doc.id, ...data });
+      });
+      return { products };
+    } catch (error) {
+      thunkAPI.rejectWithValue({
+        error: error.message,
       });
     }
-    console.log(ourdata);
-    return ourdata;
   }
 );
 
-export const addNewProduct = createAsyncThunk(
-  "products/addNewProduct",
-  async (initialProduct) => {
-    const response = await axios.post(URL, initialProduct);
-    return response.data;
+export const addOneProduct = createAsyncThunk(
+  "products/addOneProduct",
+  async (newProducts, thunkAPI) => {
+    try {
+      const docRef = await addDoc(collection(db, "products"), newProducts);
+      // console.log("Document written with ID: ", docRef.id);
+      alert('Product added successfully');
+      return {};
+    } catch (error) {
+      thunkAPI.rejectWithValue({
+        error: error.message,
+      });
+    }
   }
 );
 
 export const productSlice = createSlice({
   name: "product",
   initialState: {
-    productList: [],
-    status: "idle",
+    products: [],
+    status: "",
     error: "",
   },
-  reducers: {
-    // addProductToCart: (state, { payload }) => {
-    //   state.productList.push((item) => item.id === payload);
-    // },
-    // deleteProduct: (state, { payload }) => {
-    //   state.productList = state.productList.filter(
-    //     (item) => item.id !== payload
-    //   );
-    // },
-    productAdded: {
-      reducer(state, action) {
-        state.products.push(action.payload);
-      },
-      prepare(title, description, image, discount, price) {
-        return {
-          payload: {
-            title,
-            description,
-            image,
-            discount,
-            price,
-          },
-        };
-      },
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchAllProducts.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.products = action.payload;
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.status = "successful";
+        state.products = action.payload.products;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchAllProducts.rejected, (state, action) => {
         state.status = "failed";
-        state.products = action.payload.message.error;
+        state.error = action.payload.message.error;
+      })
+      .addCase(addOneProduct.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addOneProduct.fulfilled, (state, action) => {
+        state.status = "successful";
+        // state.products = action.payload.products;
+      })
+      .addCase(addOneProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload.message.error;
       });
   },
 });
 
-// export const { productList, addProductToCart, deleteProduct } =
-//   productSlice.actions;
-
-export const { fetchProduct } = productSlice.actions;
-
-export const selectAllProducts = (state) => state.productsList;
-export const getProductsStatus = (state) => state.status;
-export const getProductsError = (state) => state.error;
 export default productSlice.reducer;

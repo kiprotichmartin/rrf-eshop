@@ -30,9 +30,6 @@ a {
 .App {
   font-size: 20px;
   min-height: 100vh;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
   display: grid;
   grid-template-rows: 10vh auto 10vh;
 }

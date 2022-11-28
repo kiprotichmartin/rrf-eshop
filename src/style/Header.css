@@ -16,9 +16,12 @@
   font-size: 1.5em;
 }
 
-/* .header-section-links {
-
-} */
+.header-section-links {
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 40px;
+  /* border: 2px solid red; */
+}
 
 .nav-link {
   color: #ffffff;

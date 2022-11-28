@@ -12,7 +12,7 @@ export default function Header() {
       </div>
 
       <nav className="header-section-links">
-        <Link className="nav-link" to="home">
+        <Link className="nav-link" to="products">
           Home
         </Link>
         <Link className="nav-link" to="about">
@@ -21,10 +21,15 @@ export default function Header() {
         <Link className="nav-link" to="contact">
           Contact
         </Link>
+        <Link className="nav-link" to="cart">
+          Cart
+        </Link>
       </nav>
 
       <div className="header-section-actions">
-        <button className="header-btn btn-add-product">Add Product</button>
+        <Link className="header-btn" to="add-product">
+          <button className="header-btn btn-add-product">Add Product</button>
+        </Link>
         <button className="header-btn btn-logout">Logout</button>
       </div>
     </div>

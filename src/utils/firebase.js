@@ -1,28 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {
-  getFirestore,
-  doc,
-  getDocs,
-  collection,
-  addDoc,
-} from "firebase/firestore";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCj5OeVEWogaXauq6nKupSVNgSKK7x1AMs",
   authDomain: "eshop-project-eda1d.firebaseapp.com",
+  databaseURL: "https://eshop-project-eda1d-default-rtdb.firebaseio.com",
   projectId: "eshop-project-eda1d",
   storageBucket: "eshop-project-eda1d.appspot.com",
   messagingSenderId: "86187461673",
@@ -32,20 +15,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-const db = getFirestore();
-const auth = getAuth();
+const db = getFirestore(app);
 
-export {
-  auth,
-  doc,
-  addDoc,
-  getDocs,
-  collection,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-  db,
-};
+export { db };
